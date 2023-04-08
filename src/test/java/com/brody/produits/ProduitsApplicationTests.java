@@ -2,6 +2,7 @@ package com.brody.produits;
 
 import com.brody.produits.entities.Categorie;
 import com.brody.produits.entities.Produit;
+import com.brody.produits.repositories.CategorieRepository;
 import com.brody.produits.repositories.ProduitRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +21,31 @@ class ProduitsApplicationTests {
     @Autowired
     private ProduitRepository produitRepository;
 
+    @Autowired
+    private CategorieRepository categorieRepository;
+
     @Test
     void testCreateProduit() {
-        Produit prod = new Produit(null, "PC Dell",2200.500,new Date(), null);
+        Categorie categorie = categorieRepository.save(new Categorie(
+                null, "PC PORTABLE", "i9, 2To, 64Go", null
+        ));
+        Produit prod = new Produit(null, "PC Dell",2200.500,new Date(), categorie);
         Produit p = produitRepository.save(prod);
         assertNotNull(p);
     }
 
     @Test
     void testFindProduit(){
-        Produit p = produitRepository.findById(3L).orElse(null);
+        Produit p = produitRepository.findById(1L).orElse(null);
         assertNotNull(p);
-        assertEquals(3L, p.getIdProduit());
+        assertEquals(1L, p.getIdProduit());
+        p.setCategorie(null);
         System.out.println(p);
     }
 
     @Test
     void testUpdateProduit() {
-        Produit p = produitRepository.findById(3L).orElse(null);
+        Produit p = produitRepository.findById(1L).orElse(null);
         assertNotNull(p);
         p.setPrixProduit(1000.0);
         Produit prod = produitRepository.save(p);
@@ -54,8 +62,8 @@ class ProduitsApplicationTests {
     void testListerTousProduits()
     {
         List<Produit> prods = produitRepository.findAll();
-        for (Produit p : prods)
-        {
+        for (Produit p : prods) {
+            p.setCategorie(null);
             System.out.println(p);
         }
         assertNotNull(prods);
