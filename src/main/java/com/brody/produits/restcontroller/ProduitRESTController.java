@@ -53,6 +53,13 @@ public class ProduitRESTController {
         return produitService.findByCategorieIdCat(idCat);
     }
 
+    @GetMapping("/prodsByName/{nom}")
+    @ResponseBody
+    public List<Produit> findByNomProduitContains(@PathVariable("nom") String nom) {
+        return produitService.findByNomProduitContains(nom);
+    }
+
+
 
 
 

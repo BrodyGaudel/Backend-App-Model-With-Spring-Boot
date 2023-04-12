@@ -2,6 +2,7 @@ package com.brody.produits.services;
 
 import com.brody.produits.entities.Categorie;
 import com.brody.produits.entities.Produit;
+import com.brody.produits.repositories.CategorieRepository;
 import com.brody.produits.repositories.ProduitRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,23 @@ import java.util.List;
 public class ProduitServiceImpl implements ProduitService{
 
     private final ProduitRepository produitRepository;
+    private final CategorieRepository categorieRepository;
 
-    public ProduitServiceImpl(ProduitRepository produitRepository) {
+    public ProduitServiceImpl(ProduitRepository produitRepository, CategorieRepository categorieRepository) {
         this.produitRepository = produitRepository;
+        this.categorieRepository = categorieRepository;
     }
 
 
     @Override
     public Produit saveProduit(Produit p) {
+        if(p.getCategorie() == null){
+            Categorie c = new Categorie();
+            c.setNomCat("PC PORTABLE");
+            c.setDescriptionCat("PC GAMMER");
+            Categorie cat = categorieRepository.save(c);
+            p.setCategorie(cat);
+        }
         return produitRepository.save(p);
     }
 

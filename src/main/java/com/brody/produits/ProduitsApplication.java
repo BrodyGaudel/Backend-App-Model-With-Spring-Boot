@@ -1,6 +1,8 @@
 package com.brody.produits;
 
+import com.brody.produits.entities.Categorie;
 import com.brody.produits.entities.Produit;
+import com.brody.produits.repositories.CategorieRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +18,8 @@ public class ProduitsApplication {
 
     @Bean
     CommandLineRunner start(RepositoryRestConfiguration repositoryRestConfiguration){
-        return args -> repositoryRestConfiguration.exposeIdsFor(Produit.class);
+        return args -> repositoryRestConfiguration.exposeIdsFor(Produit.class, Categorie.class);
     }
+
 
 }
