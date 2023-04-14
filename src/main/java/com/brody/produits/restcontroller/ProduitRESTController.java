@@ -18,31 +18,31 @@ public class ProduitRESTController {
         this.produitService = produitService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     @ResponseBody
     public List<Produit> getAllProduits() {
         return produitService.getAllProduits();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getbyid/{id}")
     @ResponseBody
     public Produit getProduitById(@PathVariable("id") Long id) {
         return produitService.getProduit(id);
     }
 
-    @PostMapping
+    @PostMapping("/addprod")
     @ResponseBody
     public Produit createProduit(@RequestBody Produit produit) {
         return produitService.saveProduit(produit);
     }
 
-    @PutMapping
+    @PutMapping("/updateprod")
     @ResponseBody
     public Produit updateProduit(@RequestBody Produit produit) {
         return produitService.updateProduit(produit);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delprod/{id}")
     public void deleteProduit(@PathVariable("id") Long id) {
         produitService.deleteProduitById(id);
     }
@@ -52,16 +52,5 @@ public class ProduitRESTController {
     public List<Produit> getProduitsByCatId(@PathVariable("idCat") Long idCat) {
         return produitService.findByCategorieIdCat(idCat);
     }
-
-    @GetMapping("/prodsByName/{nom}")
-    @ResponseBody
-    public List<Produit> findByNomProduitContains(@PathVariable("nom") String nom) {
-        return produitService.findByNomProduitContains(nom);
-    }
-
-
-
-
-
 
 }
